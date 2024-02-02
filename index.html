@@ -19,12 +19,20 @@
     </div>
 
     <div id="totalScores">
-      <div id="playerScore">You: 0</div>
-      <div id="compScore">Computer: 0</div>
+      <div>You: <span id="playerResult"></span></div>
+      <div>Computer: <span id="compResult"></span></div>
+      <div id="finalResult"></div>
     </div>
 
     <script>      
       let result;
+      let playerScore = 0;
+      let compScore = 0;
+      const playerResult = document.querySelector("#playerResult");
+      const compResult = document.querySelector("#compResult");
+      playerResult.textContent = playerScore;
+      compResult.textContent = compScore;
+
 
       // Function generates a random integer 0, 1 or 2. Use this to randomly 
       // select between Rock, Paper or Scissors
@@ -51,12 +59,16 @@
             switch (computerSelection) {
               case "Rock":
                 result = 0.5;
+                playerScore += 0.5;
+                compScore += 0.5;
                 break;
               case "Paper":
                 result = 0;
+                compScore += 1;
                 break;
               case "Scissors":
                 result = 1;
+                playerScore += 1;
                 break;
             }
           break;
@@ -65,12 +77,16 @@
           switch (computerSelection) {
               case "Rock":
                 result = 1;
+                playerScore += 1;
                 break;
               case "Paper":
                 result = 0.5;
+                playerScore += 0.5;
+                compScore += 0.5;
                 break;
               case "Scissors":
                 result = 0;
+                compScore += 1;
                 break;
             }
           break;
@@ -80,12 +96,16 @@
           switch (computerSelection) {
               case "Rock":
                 result = 0;
+                compScore += 1;
                 break;
               case "Paper":
                 result = 1;
+                playerScore += 1;
                 break;
               case "Scissors":
                 result = 0.5;
+                playerScore += 0.5;
+                compScore += 0.5;
                 break;
             }
           break;
@@ -114,74 +134,33 @@
       // const scissors = document.querySelector("#scissors");
       const buttons = document.querySelectorAll("button");
       const thisResult = document.querySelector("#thisResult");
-      const playerScores = document.querySelector("#playerScore");
-      const compScore = document.querySelector("#compScore");
+      const finalResult = document.querySelector("#finalResult");
 
-      // Add an event listener to the buttons that call your playRound function with the correct playerSelection every time a button is clicked. (you can keep the console.logs for this step)
       buttons.forEach((button) => {
         button.addEventListener('click', () => {
           const compChoice = getComputerChoice();
           thisResult.textContent = playRound(button.textContent, compChoice);
+          playerResult.textContent = playerScore;
+          compResult.textContent = compScore;
+
+          if (playerScore >= 5 || compScore >= 5) {
+            buttons.forEach((button) => {
+              button.disabled = true;
+            })
+            
+            if ((playerScore >= 5) && (compScore != playerScore)) {
+              finalResult.textContent = "Game over! You win!";
+            }
+            else if ((playerScore >= 5) && (compScore == playerScore)) {
+              finalResult.textContent = "Game over! It's a tie."
+            }
+            else {
+              finalResult.textContent = "Game over! You lose."
+            }
+          }
         });
-      }
-      )
+      })
 
-      // Add a div for displaying results and change all of your console.logs into DOM methods.
-      // Display the running score, and announce a winner of the game once one player reaches 5 points.
-
-      // function playGame() {
-      //   // FOR 5 rounds
-      //   let playerInput;
-      //   let playerSelection;
-      //   let totalScore = 0;
-      //   let finalResult;
-      //   let inputValidation = false;
-
-      //   for (let i = 1; i <= 5; i++) {
-      //     // Prompt player for input
-      //     playerInput = prompt("Choose your weapon! Rock, Paper, or Scissors?");
-
-      //     // Check that input is valid
-      //     while (inputValidation === false) {
-      //       if (playerInput === "") {
-      //         playerInput = prompt("That's not a valid option. Please choose from: Rock, Paper or Scissors");
-      //         continue;
-      //       }
-      //       playerSelection = playerInput[0].toUpperCase() + 
-      //         playerInput.slice(1).toLowerCase();
-      //       if (!(playerSelection === "Rock" || 
-      //       playerSelection === "Paper" || 
-      //       playerSelection === "Scissors")) {
-      //         playerInput = prompt("That's not a valid option. Please choose from: Rock, Paper or Scissors");
-      //         continue;
-      //       }
-      //       inputValidation = true;
-      //     }
-
-      //     // Evaluate outcome of the game and report the outcome
-      //     console.log(playRound(playerSelection, getComputerChoice()));
-
-      //     // Add the outcome to the running score
-      //     totalScore += result;
-
-      //     // Reset input validation
-      //     inputValidation = false;
-
-      //   }
-       
-      //   // Report the overall winner based on the running score
-      //   finalResult = "Your final score: " + totalScore + 
-      //     "\nComputer's final score: " + (5 - totalScore);
-
-      //   if (totalScore < 2.5) {
-      //     console.log("You lose! \n" + finalResult);
-      //   } else if (totalScore > 2.5) {
-      //     console.log("You win! \n" + finalResult);
-      //   } else {
-      //     console.log("It's a tie! \n" + finalResult);
-      //   }
-
-      // }
 
     </script>
   </body>
