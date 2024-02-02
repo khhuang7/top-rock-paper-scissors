@@ -163,6 +163,23 @@
       const buttons = document.querySelectorAll("button");
       const thisResult = document.querySelector("#thisResult");
       const finalResult = document.querySelector("#finalResult");
+      const totalScores = document.querySelector("#totalScores");
+
+      const playAgain = document.createElement("button");
+      playAgain.setAttribute("id", "playAgain");
+      playAgain.textContent = "Click to play again";
+      playAgain.addEventListener('click', () => {
+        playerScore = 0;
+        compScore = 0;
+        playerResult.textContent = playerScore;
+        compResult.textContent = compScore;
+        thisResult.textContent = '';
+        finalResult.textContent = '';
+        buttons.forEach((button) => {
+          button.disabled = false;
+        })
+        totalScores.removeChild(playAgain);
+      })
 
       buttons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -185,6 +202,8 @@
             else {
               finalResult.textContent = "Game over! You lose."
             }
+
+            totalScores.appendChild(playAgain);
           }
         });
       })
