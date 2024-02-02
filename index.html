@@ -6,12 +6,28 @@
   </head>
 
   <body>
-    <button id="playButton" onclick = "playGame()">Let's play!</button>
+    <div>
+      <h2>Choose your weapon:</h2>
+      <button id="rock">Rock</button>
+      <button id="paper">Paper</button>
+      <button id="scissors">Scissors</button>
+    </div>
 
-    <script>
+    <div id="thisRound">
+      <div id="thisResult">
+      </div>
+    </div>
+
+    <div id="totalScores">
+      <div id="playerScore">You: 0</div>
+      <div id="compScore">Computer: 0</div>
+    </div>
+
+    <script>      
       let result;
 
-      // Function generates a random integer 0, 1 or 2. Use this to randomly select between Rock, Paper or Scissors
+      // Function generates a random integer 0, 1 or 2. Use this to randomly 
+      // select between Rock, Paper or Scissors
       function getComputerChoice() {
         let random = Math.floor(Math.random() * 3);
         switch (random) {
@@ -24,10 +40,12 @@
         }
       }
 
-      function playRound(playerSelection, computerSelection) {
-        // Assumes both parameters only have the first letter capitalized
+      // Function returns a statement reporting the outcome of the round.
+      // Assumes both parameters only have the first letter capitalized
+        function playRound(playerSelection, computerSelection) {
 
-        // For each possible player selection, and for each possible computer selection, return the outcome of the round
+        // For each possible player selection, and for each possible computer 
+        // selection, return the outcome of the round
         switch (playerSelection) {
           case "Rock":
             switch (computerSelection) {
@@ -81,73 +99,89 @@
       function reportOutcome(result, playerSelection, computerSelection) {
           switch (result) {
           case 0:
-            return "You lose! " + computerSelection + " beats " + playerSelection;
+            return "You lose! " + computerSelection + " beats " + 
+            playerSelection;
           case 0.5: 
             return "It's a tie! You both chose " + computerSelection;
           case 1:
-            return "You win! " + playerSelection + " beats " + computerSelection;
+            return "You win! " + playerSelection + " beats " + 
+            computerSelection;
         }
       }
 
+      // const rock = document.querySelector("#rock");
+      // const paper = document.querySelector("#paper");
+      // const scissors = document.querySelector("#scissors");
+      const buttons = document.querySelectorAll("button");
+      const thisResult = document.querySelector("#thisResult");
+      const playerScores = document.querySelector("#playerScore");
+      const compScore = document.querySelector("#compScore");
 
-      // Test playRound function
-      // let playerSelection = "SCISSORS";
-      // playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase();
-      // console.log(playerSelection);
-      // const computerSelection = getComputerChoice();
-      // console.log(computerSelection);
-      // console.log(playRound(playerSelection, computerSelection));
-      // console.log(result);
+      // Add an event listener to the buttons that call your playRound function with the correct playerSelection every time a button is clicked. (you can keep the console.logs for this step)
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const compChoice = getComputerChoice();
+          thisResult.textContent = playRound(button.textContent, compChoice);
+        });
+      }
+      )
 
-      function playGame() {
-        // FOR 5 rounds
-        let playerInput;
-        let playerSelection;
-        let totalScore = 0;
-        let finalResult;
-        let inputValidation = false;
+      // Add a div for displaying results and change all of your console.logs into DOM methods.
+      // Display the running score, and announce a winner of the game once one player reaches 5 points.
 
-        for (let i = 1; i <= 5; i++) {
-          // Prompt player for input
-          playerInput = prompt("Choose your weapon! Rock, Paper, or Scissors?");
+      // function playGame() {
+      //   // FOR 5 rounds
+      //   let playerInput;
+      //   let playerSelection;
+      //   let totalScore = 0;
+      //   let finalResult;
+      //   let inputValidation = false;
 
-          // Check that input is valid
-          while (inputValidation === false) {
-            if (playerInput === "") {
-              playerInput = prompt("That's not a valid option. Please choose from: Rock, Paper or Scissors");
-              continue;
-            }
-            playerSelection = playerInput[0].toUpperCase() + playerInput.slice(1).toLowerCase();
-            if (!(playerSelection === "Rock" || playerSelection === "Paper" || playerSelection === "Scissors")) {
-              playerInput = prompt("That's not a valid option. Please choose from: Rock, Paper or Scissors");
-              continue;
-            }
-            inputValidation = true;
-          }
+      //   for (let i = 1; i <= 5; i++) {
+      //     // Prompt player for input
+      //     playerInput = prompt("Choose your weapon! Rock, Paper, or Scissors?");
 
-          // Evaluate outcome of the game and report the outcome
-          console.log(playRound(playerSelection, getComputerChoice()));
+      //     // Check that input is valid
+      //     while (inputValidation === false) {
+      //       if (playerInput === "") {
+      //         playerInput = prompt("That's not a valid option. Please choose from: Rock, Paper or Scissors");
+      //         continue;
+      //       }
+      //       playerSelection = playerInput[0].toUpperCase() + 
+      //         playerInput.slice(1).toLowerCase();
+      //       if (!(playerSelection === "Rock" || 
+      //       playerSelection === "Paper" || 
+      //       playerSelection === "Scissors")) {
+      //         playerInput = prompt("That's not a valid option. Please choose from: Rock, Paper or Scissors");
+      //         continue;
+      //       }
+      //       inputValidation = true;
+      //     }
 
-          // Add the outcome to the running score
-          totalScore += result;
+      //     // Evaluate outcome of the game and report the outcome
+      //     console.log(playRound(playerSelection, getComputerChoice()));
 
-          // Reset input validation
-          inputValidation = false;
+      //     // Add the outcome to the running score
+      //     totalScore += result;
 
-        }
+      //     // Reset input validation
+      //     inputValidation = false;
+
+      //   }
        
-        // Report the overall winner based on the running score
-        finalResult = "Your final score: " + totalScore + "\nComputer's final score: " + (5 - totalScore);
+      //   // Report the overall winner based on the running score
+      //   finalResult = "Your final score: " + totalScore + 
+      //     "\nComputer's final score: " + (5 - totalScore);
 
-        if (totalScore < 2.5) {
-          console.log("You lose! \n" + finalResult);
-        } else if (totalScore > 2.5) {
-          console.log("You win! \n" + finalResult);
-        } else {
-          console.log("It's a tie! \n" + finalResult);
-        }
+      //   if (totalScore < 2.5) {
+      //     console.log("You lose! \n" + finalResult);
+      //   } else if (totalScore > 2.5) {
+      //     console.log("You win! \n" + finalResult);
+      //   } else {
+      //     console.log("It's a tie! \n" + finalResult);
+      //   }
 
-      }
+      // }
 
     </script>
   </body>
