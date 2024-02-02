@@ -3,14 +3,44 @@
   <head>
     <meta charset="utf-8">
     <title>Rock, Paper, Scissors</title>
+    <style>   
+      * {
+        font-family:Arial, Helvetica, sans-serif;
+      }
+      
+      button {
+        width: 100px;
+        padding: 5px;
+        font-size: 16px;
+      }
+
+      div {
+        margin: 10px 0px;
+        text-align: center;
+      }
+
+      h2 {
+        margin-top: 30px;
+        margin-bottom: 10px;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+      }
+
+    </style>
   </head>
 
   <body>
     <div>
       <h2>Choose your weapon:</h2>
-      <button id="rock">Rock</button>
-      <button id="paper">Paper</button>
-      <button id="scissors">Scissors</button>
+      <div class="buttons">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+      </div>
     </div>
 
     <div id="thisRound">
@@ -19,9 +49,10 @@
     </div>
 
     <div id="totalScores">
+      <h2>Total scores</h2>
       <div>You: <span id="playerResult"></span></div>
       <div>Computer: <span id="compResult"></span></div>
-      <div id="finalResult"></div>
+      <h2 id="finalResult"></h2>
     </div>
 
     <script>      
@@ -129,9 +160,6 @@
         }
       }
 
-      // const rock = document.querySelector("#rock");
-      // const paper = document.querySelector("#paper");
-      // const scissors = document.querySelector("#scissors");
       const buttons = document.querySelectorAll("button");
       const thisResult = document.querySelector("#thisResult");
       const finalResult = document.querySelector("#finalResult");
